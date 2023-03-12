@@ -13,7 +13,7 @@ setup(
     description='Binance API integration with backtrader',
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
-    url='https://github.com/lindomar-oliveira/backtrader-binance',
+    url='https://github.com/eantomsk/backtrader-binance',
     author='Lindomar Oliveira',
     author_email='lindomar.souza1999@gmail.com',
     license='MIT',

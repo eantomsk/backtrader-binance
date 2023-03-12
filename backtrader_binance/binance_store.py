@@ -63,7 +63,7 @@ class BinanceStore(object):
         @wraps(func)
         def wrapper(self, *args, **kwargs):
             for attempt in range(1, self.retries + 1):
-                time.sleep(60 / 1200) # API Rate Limit
+                time.sleep(0.1) # API Rate Limit
                 try:
                     return func(self, *args, **kwargs)
                 except (BinanceAPIException, ConnectTimeout, ConnectionError) as err:
@@ -123,6 +123,12 @@ class BinanceStore(object):
     def get_asset_balance(self, asset):
         balance = self.binance.get_asset_balance(asset)
         return float(balance['free']), float(balance['locked'])
+
+    @retry
+    def get_refer_balance(self):
+        balance = self.binance.get_asset_balance(self.coin_refer)
+        return float(balance['free'])
+    
 
     def get_balance(self):
         free, locked = self.get_asset_balance(self.coin_target)
