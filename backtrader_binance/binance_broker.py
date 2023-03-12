@@ -39,7 +39,7 @@ class BinanceBroker(BrokerBase):
 
     def __init__(self, store):
         super(BinanceBroker, self).__init__()
-
+        print('Init binanceBroker')
         self.notifs = deque()
         self.positions = defaultdict(Position)
 
@@ -67,7 +67,7 @@ class BinanceBroker(BrokerBase):
                 for o in self.open_orders:
                     if o.binance_order['orderId'] == msg['i']:
                         if msg['X'] in [ORDER_STATUS_FILLED, ORDER_STATUS_PARTIALLY_FILLED]:
-                            date = dt.datetime.fromtimestamp(msg['T'] / 1000)
+                            #date = dt.datetime.fromtimestamp(msg['T'] / 1000)
                             executed_size = float(msg['l'])
                             executed_price = float(msg['L'])
                             self._execute_order(o, dt, executed_size, executed_price)
@@ -141,6 +141,7 @@ class BinanceBroker(BrokerBase):
         return pos
 
     def getvalue(self, datas=None):
+        self._store.get_balance()
         self.value = self._store._value
         return self.value
 
